@@ -8,13 +8,13 @@ const dotenv=require('dotenv');
 //importacion de rutas
 const RouterCharacter = require('./routes/character-routes');
 const RouterUser=require('./routes/user-routers');
-
+const jwt=require('./services/jwt');
 
 //configuracion de dotenv
 dotenv.config();
 //constantes a utilizar
 const PORT=process.env.PORT || 3000;
-const URL=process.env.URL;
+const URL=process.env.URL || "mongodb://PabloCh:39208224@leicester-shard-00-00.oznaq.mongodb.net:27017,leicester-shard-00-01.oznaq.mongodb.net:27017,leicester-shard-00-02.oznaq.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-4b2p6i-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 //Configuraciones
 app.use(morgan('dev'));
@@ -49,6 +49,7 @@ app.use((req, res, next) => {
 //Puerto
 app.listen(PORT, ()=>{
     console.log(`Conectado en el puerto: ${PORT}`);
+    jwt();
 });
 
 //falta establecer rutas, y controllers, ver routes.
