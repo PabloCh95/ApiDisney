@@ -4,14 +4,17 @@
   "description": "Challenge Node, me pidieron una api, para personajes del mundo de Peliculas de Disney. Tengo que vincular a los personajes con las peliculas en las que estuvieron",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "PabloCh",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jwt-simple": "^0.5.6",
     "mongoose": "^5.12.2",
     "morgan": "^1.10.0"
   },
