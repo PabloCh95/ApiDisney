@@ -1,13 +1,39 @@
 const bcrypt=require("bcrypt");
 const User=require('../models/users');
-
-const login = (req,res)=>{
+const emailValidation=require('../utils/email-validation');
+//funcion para loguear, funcionando...
+const login =async (req,res)=>{
     try{
-        
-    }catch(error){
+        const{email, password}=req.body;
+        if(!email || !password){
+            res.status(404).send({message:'Los campos deben estar completos'});
+        }if(!emailValidation(email)){
+            res.status(404).send({message:'El email es invalido, por favor ingrese un Email valido...'});
+        }else{
+            const user=await User.findOne({email});
+            
+           if(user){
+                const passOK=await bcrypt.compare(password,user.password);
+                if(passOK){
+                    //tengo que aplicarle el encriptado del token
 
+                    res.status(200).send({
+                        message:'Se ha logueado Correctamente',
+                        user
+                    })
+                }else{
+                    res.status(404).send({message:'INVALID_PASSWORD'});
+                }
+            }else{
+                res.status(204).send({message:'USER_NOT_FOUND'});
+            } 
+        }
+    }catch(error){
+        console.log(error);
+        res.status(500).send({message:'Error del servidor'});
     }
 }
+//funcion para registrarme, funcionando.
 const signUp= async (req,res)=>{
    try{
         const {name,lastname,email,password}=req.body;

@@ -5,10 +5,10 @@ const mongoose=require('mongoose');
 const morgan=require('morgan');
 const dotenv=require('dotenv');
 
+//importacion de rutas
 const RouterCharacter = require('./routes/character-routes');
 const RouterUser=require('./routes/user-routers');
 
-//modulos importados
 
 //configuracion de dotenv
 dotenv.config();
