@@ -8,7 +8,7 @@ const dotenv=require('dotenv');
 //importacion de rutas
 const RouterCharacter = require('./routes/character-routes');
 const RouterUser=require('./routes/user-routers');
-const jwt=require('./services/jwt');
+
 
 //configuracion de dotenv
 dotenv.config();
@@ -35,6 +35,7 @@ mongoose.connect(URL, {
 //Rutas
 //app.use('/api/character',RouterCharacter);
 app.use('/api/user',RouterUser);
+app.use('/api/character',RouterCharacter);
 //Configuraciones Header HTTP
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -49,7 +50,6 @@ app.use((req, res, next) => {
 //Puerto
 app.listen(PORT, ()=>{
     console.log(`Conectado en el puerto: ${PORT}`);
-    jwt();
 });
 
 //falta establecer rutas, y controllers, ver routes.

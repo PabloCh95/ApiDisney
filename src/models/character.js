@@ -3,7 +3,7 @@ const Schema=mongoose.Schema;
 //esquema de personaje
 const CharacterSchema=Schema({
     image:{type:String},
-    name:{type:String},
+    name:{type:String, unique:true},
     age:{type:String},
     weight:{type:Number},
     history:{type:String},

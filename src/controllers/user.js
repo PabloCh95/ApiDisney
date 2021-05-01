@@ -1,6 +1,8 @@
 const bcrypt=require("bcrypt");
 const User=require('../models/users');
+const {createToken,createRefreshToken}=require('../services/jwt');
 const emailValidation=require('../utils/email-validation');
+
 //funcion para loguear, funcionando...
 const login =async (req,res)=>{
     try{
@@ -16,11 +18,11 @@ const login =async (req,res)=>{
                 const passOK=await bcrypt.compare(password,user.password);
                 if(passOK){
                     //tengo que aplicarle el encriptado del token
-
                     res.status(200).send({
                         message:'Se ha logueado Correctamente',
-                        user
-                    })
+                        accessToken:createToken(user),
+                        refreshToken:createRefreshToken(user)
+                    });
                 }else{
                     res.status(404).send({message:'INVALID_PASSWORD'});
                 }
