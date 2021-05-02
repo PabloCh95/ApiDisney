@@ -41,11 +41,23 @@ const searchCharacter=async (req,res)=>{
         const {name,film}=req.body;
         if(name){
             const character=await Character.find({name})
-            res.status(200).send({message:"Se busco correctamente por el nombre del personaje",character});
+            if(character){
+                res.status(200).send({message:"Se busco correctamente por el nombre del personaje",character});
+            }else{
+                res.status(204).send({message:"CHARACTER_NOT_FOUND"});
+            }
+            
         }else if(film){
             //falla cuando lo busco por pelicula
-            const character=await Character.find({film:[{title:film.title}]});
-            res.status(200).send({message:"Se busco correctamente por el nombre de la pelicula",character});
+            console.log("film:",film)
+            const character=await Character.find({film});
+            if(character){
+                console.log("character:",character);
+                res.status(200).send({message:"Se busco correctamente por el nombre de la pelicula",character});
+            }else{
+                res.status(204).send({message:"CHARACTER_NOT_FOUND"});
+            }
+            
         }else{
             res.status(404).send({message:"Los campos deben estar completos"});
         }
