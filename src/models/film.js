@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const Schema=mongoose.Schema();
 
 const SchemaFilm=Schema({
-    title:{type:String},
+    title:{type:String,unique:true,require:true},
     image:{type:String},
     date:{type:String}
 })

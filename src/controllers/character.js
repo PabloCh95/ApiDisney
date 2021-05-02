@@ -36,13 +36,14 @@ const listCharacter= (req,res)=>{
         });
 }
 //busqueda de personajes por nombre o por pelicula
-const updateCharacter=async (req,res)=>{
+const searchCharacter=async (req,res)=>{
     try {
         const {name,film}=req.body;
         if(name){
             const character=await Character.find({name})
             res.status(200).send({message:"Se busco correctamente por el nombre del personaje",character});
         }else if(film){
+            //falla cuando lo busco por pelicula
             const character=await Character.find({film:[{title:film.title}]});
             res.status(200).send({message:"Se busco correctamente por el nombre de la pelicula",character});
         }else{
@@ -52,6 +53,10 @@ const updateCharacter=async (req,res)=>{
         console.log(error);
         res.status(500).send({message:error});
     }
+}
+//actualizar personajes
+const updateCharacter=(req,res)=>{
+    let CharacterData=req.body;
 }
 //borra personajes
 const deleteCharacter=async (req,res)=>{
@@ -76,5 +81,6 @@ module.exports={
     createCharacter,
     listCharacter,
     updateCharacter,
+    searchCharacter,
     deleteCharacter
 }
