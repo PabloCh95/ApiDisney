@@ -8,7 +8,6 @@ const createToken=(user)=>{
         name:user.name,
         lastname:user.lastname,
         email:user.email,
-        role:user.role,
         createToken: moment().unix(),
         exp:moment().add(3,"hours").unix()
     };
