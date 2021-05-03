@@ -19,7 +19,7 @@ const createCharacter=async (req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send({message:'Error del servidor.'});
+        res.status(500).send({message:'ERROR DEL SERVIDOR'});
     }
 }
 //muestra a todos los personajes, devuelve un array de objetos
@@ -32,7 +32,7 @@ const listCharacter= (req,res)=>{
             }
         }).catch((e)=>{
             console.log(e);
-            res.status(500).send({message:"Error del servidor"});
+            res.status(500).send({message:"ERROR DEL SERVIDOR"});
         });
 }
 //busqueda de personajes por nombre o por pelicula
@@ -63,12 +63,28 @@ const searchCharacter=async (req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send({message:error});
+        res.status(500).send({message:"ERROR DEL SERVIDOR"});
     }
 }
 //actualizar personajes
-const updateCharacter=(req,res)=>{
-    let CharacterData=req.body;
+const updateCharacter=async (req,res)=>{
+    try{
+        const {id}=req.params;
+        const {name,film,age,image,weight,history} =req.body;
+        if(name||film||age||image||weight||history){
+            const characterUpdate=await Character.findByIdAndUpdate({id},req.body)
+            if(characterUpdate){
+                res.status(200).send({message:'Se a actualizado el personaje correctamente'});
+            }else{
+                res.status(404).send({message:"No se ha encontrado ningun personaje."})
+            }
+        }else{
+            res.status(404).send({message:"los campos deben estar completos"});
+        }
+    }catch(error){
+        console.log(error);
+        res.status(500).send({message:"ERROR DEL SERVIDOR"});
+    }
 }
 //borra personajes
 const deleteCharacter=async (req,res)=>{
@@ -84,7 +100,8 @@ const deleteCharacter=async (req,res)=>{
         }
 
     }catch(e){
-        res.status(500).send({message:e.message});
+        console.log(e);
+        res.status(500).send({message:"ERROR DEL SERVIDOR"});
     }
 }
 //actualiza personajes
